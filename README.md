@@ -1,7 +1,3 @@
-# Download Website
-
-This project is a simple web application that facilitates file downloads. It provides a user-friendly interface for users to download sample files.
-
 ## Project Structure
 
 ```
