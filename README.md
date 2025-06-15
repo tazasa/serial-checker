@@ -27,7 +27,7 @@ download-website
 
 2. Navigate to the project directory:
    ```
-   cd download-website
+   cd website
    ```
 
 3. Install the dependencies:
