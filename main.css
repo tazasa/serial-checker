@@ -1,79 +1,142 @@
-body {
-    margin: 0;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: #181c24;
-    color: #f5f6fa;
-    min-height: 100vh;
-    position: relative;
-    z-index: 1;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Serial Checker Download</title>
+    <link rel="stylesheet" href="main.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        body {
+            min-height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #181c24;
+            color: #f5f6fa;
+            position: relative;
+            z-index: 1;
+        }
+        .animated-bg {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -1;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: #181c24;
+        }
+        #bg-canvas {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+            position: absolute;
+            top: 0; left: 0;
+            pointer-events: none;
+        }
+        header {
+            text-align: center;
+            margin-top: 80px;
+        }
+        h1 {
+            font-size: 2.7rem;
+            margin-bottom: 0.5em;
+            color: #4f8cff;
+            font-weight: 800;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            margin-bottom: 2em;
+        }
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+        }
+        .download-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 16px 32px;
+            background: linear-gradient(90deg, #4f8cff 0%, #00f2fe 100%);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: 0 2px 12px #4f8cff44;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .download-link:hover {
+            background: linear-gradient(90deg, #00f2fe 0%, #4f8cff 100%);
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 6px 24px #00f2fe66;
+        }
+        .download-icon {
+            font-size: 1.3em;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg">
+        <canvas id="bg-canvas"></canvas>
+    </div>
+    <header>
+        <h1>Download the Serial Checker Tool</h1>
+        <p class="subtitle">
+            Instantly validate your serials and scan for active Anti-Cheats with our advanced tool.
+        </p>
+    </header>
+    <main>
+        <a href="Serial Checker.zip" download class="download-link">
+            <span class="download-icon">⬇</span> Download Serial Checker (.zip)
+        </a>
+    </main>
+    <script>
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
 
-.animated-bg {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    z-index: -1;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    background: #181c24;
-}
+        window.addEventListener('resize', () => {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        });
 
-#bg-canvas {
-    width: 100vw;
-    height: 100vh;
-    display: block;
-    position: absolute;
-    top: 0; left: 0;
-    pointer-events: none;
-}
+        const colors = [
+            'rgba(79,140,255,0.22)',
+            'rgba(0,242,254,0.18)',
+            'rgba(255,110,196,0.16)',
+            'rgba(127,156,245,0.18)',
+            'rgba(255,200,40,0.13)'
+        ];
 
-header {
-    text-align: center;
-    margin-top: 80px;
-}
-
-h1 {
-    font-size: 2.7rem;
-    margin-bottom: 0.5em;
-    color: #4f8cff;
-    font-weight: 800;
-}
-
-.subtitle {
-    font-size: 1.2rem;
-    color: #b0b0b0;
-    margin-bottom: 2em;
-}
-
-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 40px;
-}
-
-.download-link {
-    display: inline-flex;
-    align-items: center;
-    padding: 16px 32px;
-    background: linear-gradient(90deg, #4f8cff 0%, #00f2fe 100%);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    box-shadow: 0 2px 12px #4f8cff44;
-    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
-    cursor: pointer;
-}
-
-.download-link:hover {
-    background: linear-gradient(90deg, #00f2fe 0%, #4f8cff 100%);
-    transform: translateY(-2px) scale(1.04);
-    box-shadow: 0 6px 24px #00f2fe66;
-}
-
-.download-icon {
-    font-size: 1.3em;
-    margin-right: 10px;
-}
+        function drawWaves() {
+            ctx.clearRect(0, 0, width, height);
+            for (let c = 0; c < colors.length; c++) {
+                ctx.beginPath();
+                for (let x = 0; x <= width; x += 10) {
+                    let y = height/2 + Math.sin((x/width * 4 + c) + (Date.now()/2000 + c)) * (60 + c*10);
+                    if (x === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.strokeStyle = colors[c];
+                ctx.lineWidth = 12 - c*2;
+                ctx.lineCap = "round";
+                ctx.stroke();
+            }
+            requestAnimationFrame(drawWaves);
+        }
+        drawWaves();
+    </script>
+</body>
+</html>
